@@ -32,7 +32,9 @@ const UserContent = styled.div`
 `;
 
 const PhotoContainer = styled.div`
-  width: 20%;
+  width: 11rem;
+  display: grid;
+  align-items: center;
 `;
 
 const ProfilePic = styled.img`
@@ -47,7 +49,7 @@ const UserInfo = styled.div`
   justify-content: center;
   h3 {
     font-weight: bold;
-    font-size: 2rem;
+    font-size: 2em;
     font-family: 'BeatriceRegular';
   }
   h4 {

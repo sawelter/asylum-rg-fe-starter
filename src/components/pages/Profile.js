@@ -66,6 +66,11 @@ const UserInfo = styled.div`
 
 const Profile = () => {
   const { user } = useAuth0();
+
+  if (!user) {
+    return null;
+  }
+
   const { name, picture, email, nickname } = user;
 
   return (

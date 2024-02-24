@@ -27,8 +27,7 @@ import { Auth0ProviderWithHistory } from './authentication/auth0-provider-with-h
 import { CallbackPage } from './authentication/callback-page';
 import Profile from './components/pages/Profile';
 import { useAuth0 } from '@auth0/auth0-react';
-import Loading from './components/common/loading';
-import LoadingComponent from './components/common/LoadingComponent';
+import LoadingPage from './components/common/loading';
 import { ProtectedRoute } from './authentication/protected-route';
 
 const { primary_accent_color } = colors;
@@ -52,10 +51,6 @@ export function App() {
 
   const { isLoading } = useAuth0();
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
     <Layout>
       <Header
@@ -68,6 +63,7 @@ export function App() {
       >
         <HeaderContent />
       </Header>
+      {isLoading && <LoadingPage />}
       <Switch>
         <Route path="/" exact component={LandingPage} />
         <Route path="/graphs" component={GraphsContainer} />

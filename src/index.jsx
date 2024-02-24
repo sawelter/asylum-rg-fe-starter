@@ -24,7 +24,12 @@ import reducer from './state/reducers';
 import { colors } from './styles/data_vis_colors';
 
 import { Auth0ProviderWithHistory } from './authentication/auth0-provider-with-history';
+import { CallbackPage } from './authentication/callback-page';
 import Profile from './components/pages/Profile';
+import { useAuth0 } from '@auth0/auth0-react';
+import Loading from './components/common/loading';
+import LoadingComponent from './components/common/LoadingComponent';
+import { ProtectedRoute } from './authentication/protected-route';
 
 const { primary_accent_color } = colors;
 
@@ -44,6 +49,13 @@ ReactDOM.render(
 
 export function App() {
   const { Footer, Header } = Layout;
+
+  const { isLoading } = useAuth0();
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <Layout>
       <Header
@@ -59,7 +71,8 @@ export function App() {
       <Switch>
         <Route path="/" exact component={LandingPage} />
         <Route path="/graphs" component={GraphsContainer} />
-        <Route path="/profile" component={Profile} />
+        <ProtectedRoute path="/profile" component={Profile} />
+        <Route path="/callback" component={CallbackPage} />
         <Route component={NotFoundPage} />
       </Switch>
       <Footer

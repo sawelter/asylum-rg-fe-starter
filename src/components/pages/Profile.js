@@ -85,9 +85,9 @@ const Profile = () => {
         <UserInfo>
           <h3>{name}</h3>
           <h4>Username</h4>
-          <p>{nickname}</p>
+          <p>{nickname ? nickname : <i>none</i>}</p>
           <h4>Email</h4>
-          <p>{email}</p>
+          <p>{email ? email : <i>none</i>}</p>
         </UserInfo>
       </UserContent>
     </ProfileSection>

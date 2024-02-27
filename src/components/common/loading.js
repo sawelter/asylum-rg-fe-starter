@@ -2,12 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { colors } from '../../styles/data_vis_colors';
 
-import { FooterContent, SubFooter } from '../Layout/Footer';
-import { Layout } from 'antd';
-import { HeaderContent } from '../Layout/Header';
-import { Header } from 'antd/lib/layout/layout';
-import { Footer } from 'antd/lib/layout/layout';
-
 const loadingImg =
   'https://cdn.auth0.com/blog/auth0-react-sample/assets/loading.svg';
 

@@ -50,7 +50,13 @@ function GraphWrapper(props) {
         break;
     }
   }
-  function updateStateWithNewData(years, view, office, stateSettingCallback) {
+
+  async function updateStateWithNewData(
+    years,
+    view,
+    office,
+    stateSettingCallback
+  ) {
     /*
           _                                                                             _
         |                                                                                 |
@@ -73,42 +79,55 @@ function GraphWrapper(props) {
     
     */
 
+    const citizenship = await axios.get(
+      `${process.env.REACT_APP_API_URI}/citizenshipSummary`,
+      {
+        params: {
+          from: years[0],
+          to: years[1],
+        },
+      }
+    );
+    console.log('citizenship', citizenship);
+
     if (office === 'all' || !office) {
-      axios
-        .get(process.env.REACT_APP_API_URI, {
-          // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
+      const fiscal = await axios.get(
+        `${process.env.REACT_APP_API_URI}/fiscalSummary`,
+        {
           params: {
             from: years[0],
             to: years[1],
           },
-        })
-        .then(result => {
-          stateSettingCallback(view, office, test_data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
-        })
-        .catch(err => {
-          console.error(err);
-        });
+        }
+      );
+      console.log('fiscal', fiscal);
+
+      fiscal.data.citizenshipResults = citizenship.data;
+
+      stateSettingCallback(view, office, [fiscal.data]);
     } else {
-      axios
-        .get(process.env.REACT_APP_API_URI, {
-          // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
+      const fiscal = await axios.get(
+        `${process.env.REACT_APP_API_URI}/fiscalSummary`,
+        {
           params: {
             from: years[0],
             to: years[1],
             office: office,
           },
-        })
-        .then(result => {
-          stateSettingCallback(view, office, test_data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
-        })
-        .catch(err => {
-          console.error(err);
-        });
+        }
+      );
+      console.log('fiscal', fiscal);
+
+      fiscal.data.citizenshipResults = citizenship.data;
+
+      stateSettingCallback(view, office, [fiscal.data]);
     }
   }
+
   const clearQuery = (view, office) => {
     dispatch(resetVisualizationQuery(view, office));
   };
+
   return (
     <div
       className="map-wrapper-container"
